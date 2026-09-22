@@ -56,3 +56,25 @@ then commit and push as usual.
 2. `git config --global credential.helper ...` into `~/.gitconfig.local`
 3. `atuin login` + `gh auth login` as needed
 4. Open nvim once to let lazy.nvim restore pinned plugins
+
+## SSH access (logging in to these machines)
+
+`~/.ssh/authorized_keys` is tracked here (public keys only — safe), linked
+by `install.sh`. Add a new device's key to `.ssh/authorized_keys`, commit,
+push, then re-run `install.sh` on each machine.
+
+Per machine (as root) enable the server + harden:
+
+```sh
+ssh-keygen -A                                  # generate host keys if missing
+systemctl enable --now sshd
+cp ~/.dotfiles/sshd/50-hardening.conf /etc/ssh/sshd_config.d/  # key-only auth
+systemctl reload sshd
+```
+
+The private key lives only on the client machine:
+
+```sh
+ssh-keygen -t ed25519 -C "you@device"
+cat ~/.ssh/id_ed25519.pub   # paste into .ssh/authorized_keys
+```
