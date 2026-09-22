@@ -31,3 +31,17 @@ up() { local d=; for _ in $(seq "${1:-1}"); do d+=../; done; cd "$d" || return; 
 
 # tre — tree view limited to depth, ignoring junk
 tre() { eza --tree --level="${1:-2}" --git-ignore --icons; }
+
+# infi — run a command with Infisical secrets injected (needs infisical CLI).
+#   INFI_PROJECT=myproj infi dev -- python app.py
+#   infi prod -- make deploy
+infi() {
+    if [ $# -lt 2 ]; then
+        echo "Usage: infi <env> -- <command> [args...]   (set INFI_PROJECT=<slug> once)"
+        return 1
+    fi
+    local env_="$1"; shift
+    local args=()
+    [ -n "${INFI_PROJECT:-}" ] && args+=(--projectId "$INFI_PROJECT")
+    infisical secrets run --silent "${args[@]}" --env "$env_" -- "$@"
+}

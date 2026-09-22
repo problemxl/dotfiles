@@ -78,3 +78,24 @@ The private key lives only on the client machine:
 ssh-keygen -t ed25519 -C "you@device"
 cat ~/.ssh/id_ed25519.pub   # paste into .ssh/authorized_keys
 ```
+
+### Per-device keys (recommended)
+
+One keypair per device — losing a device means revoking one line, not
+re-keying everything. Store private keys in your password manager
+(Bitwarden/Vaultwarden SSH agent) or `~/.ssh/`; commit each device's
+**public** key as `.ssh/keys/<device>.pub` plus a matching line in
+`.ssh/authorized_keys`. Host blocks in `.ssh/config` reference the pubkey
+file (`IdentityFile`), and the local agent supplies the private half.
+Env-to-env: use `ProxyJump` (see `.ssh/config`) so no private key ever
+sits on a server.
+
+### Secrets on envs
+
+Machine secrets (API keys, tokens) come from Infisical — never from this
+repo. The `infi` shell function (`.config/shell/functions`) wraps it:
+
+```sh
+export INFI_PROJECT=<your-project-slug>
+infi dev -- python app.py     # runs with dev secrets injected
+```

@@ -17,6 +17,8 @@ FILES=(
     ".bash_profile"
     ".gitconfig"
     ".ssh/authorized_keys"
+    ".ssh/config"
+    ".ssh/keys"
     ".config/shell"
     ".config/starship.toml"
     ".config/zellij"
@@ -52,10 +54,14 @@ link() {
     ln -s "$src" "$dst"
     echo "linked  $rel"
 
-    # sshd StrictModes requires private-ish perms on ~/.ssh and the key file
+    # sshd StrictModes requires private-ish perms on ~/.ssh contents
     if [[ "$rel" == .ssh/* ]]; then
         chmod 700 "$HOME/.ssh"
-        chmod 600 "$dst" 2>/dev/null
+        if [ -d "$dst" ]; then
+            chmod 700 "$dst"
+        else
+            chmod 600 "$dst" 2>/dev/null
+        fi
     fi
 }
 
