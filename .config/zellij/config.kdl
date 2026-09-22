@@ -1,0 +1,41 @@
+// ~/.config/zellij/config.kdl — Zellij terminal multiplexer config
+// Reference: https://zellij.dev/documentation/configuration.html
+// Dump the full defaults any time with:  zellij setup --dump-config
+
+// --- Theme --------------------------------------------------------
+// Built-in options include: default, dracula, gruvbox-dark, nord,
+// tokyo-night, catppuccin-frappe/-macchiato/-mocha, solarized-dark, ...
+theme "catppuccin-mocha"
+
+// --- Behaviour ----------------------------------------------------
+// Compact layout: single status bar (no top tab-bar taking a line).
+default_layout "compact"
+
+// Use the login shell as the default program (honours $SHELL).
+// default_shell "bash"
+
+// Resize / select panes with the mouse; hold Shift to bypass.
+mouse_mode true
+advanced_mouse_actions true
+mouse_hover_effects true
+
+// Release the mouse to copy selection to the clipboard.
+copy_on_select true
+
+// Larger scrollback (default is 10000).
+scroll_buffer_size 100000
+
+// Draw borders around panes.
+pane_frames true
+
+// Re-flow panes automatically into tidy layouts.
+auto_layout true
+
+// Restore the session (panes + scrollback) when zellij is reopened.
+session_serialization true
+
+// Show rich underline styles (needs a capable terminal).
+styled_underlines true
+
+// Mirror the session so it can be viewed by another client.
+mirror_session false

@@ -1,0 +1,64 @@
+# ~/.config/shell/aliases
+
+# If not interactive, stop here (aliases are useless otherwise)
+case $- in
+    *i*) ;;
+      *) return;;
+esac
+
+# --- ls / eza -----------------------------------------------------
+alias ls='eza --group-directories-first'
+alias ll='eza -l --icons --git --group-directories-first'
+alias la='eza -la --icons --git --group-directories-first'
+alias l='eza --icons --group-directories-first'
+alias lt='eza --tree --level=2 --icons'
+
+# --- cat / bat ----------------------------------------------------
+alias cat='bat --paging=never --style=plain'
+alias bathelp='bat --plain --language=help'
+
+# --- navigation ---------------------------------------------------
+alias ..='cd ..'
+alias ...='cd ../..'
+alias ....='cd ../../..'
+alias -- -='cd -'
+alias cd..='cd ..'
+
+# --- grep ---------------------------------------------------------
+alias grep='grep --color=auto'
+alias egrep='egrep --color=auto'
+alias fgrep='fgrep --color=auto'
+alias ip='ip --color=auto'
+
+# --- safety -------------------------------------------------------
+alias cp='cp -iv'
+alias mv='mv -iv'
+alias rm='rm -I'
+alias ln='ln -iv'
+alias chmod="chmod -c"
+alias chown="chown -c"
+
+# --- git ----------------------------------------------------------
+alias g='git'
+alias gs='git status -sb'
+alias gd='git diff'
+alias gdc='git diff --cached'
+alias gl='git log --oneline --graph --decorate -20'
+alias gp='git push'
+alias ga='git add'
+alias gc='git commit'
+alias gco='git checkout'
+alias gb='git branch'
+alias gpl='git pull'
+
+# --- misc ---------------------------------------------------------
+alias v='nvim'
+alias vim='nvim'
+alias diff='diff --color=auto'
+alias df='df -h'
+alias free='free -h'
+alias ports='ss -tulanp'
+alias path='echo -e ${PATH//:/\\n}'
+alias reload='source ~/.bashrc'
+alias :q='exit'
+alias cls='clear'

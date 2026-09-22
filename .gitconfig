@@ -1,0 +1,14 @@
+# ~/.gitconfig — shared settings (tracked in dotfiles)
+# Machine-specific settings (credentials, etc.) go in ~/.gitconfig.local,
+# which is created by install.sh and never overwritten.
+
+[user]
+    name = problemxl
+    email = email@github.com
+
+[init]
+    defaultBranch = main
+
+# Pull in machine-local overrides if present
+[include]
+    path = ~/.gitconfig.local

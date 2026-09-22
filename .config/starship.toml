@@ -1,0 +1,36 @@
+# ~/.config/starship.toml — Omarchy-style minimal prompt
+
+# Overall: show prompt on same line as input
+add_newline = true
+format = """$directory$git_branch$git_status$character"""
+right_format = """$cmd_duration"""
+
+# --- directory ----------------------------------------------------
+[directory]
+truncation_length = 3
+truncate_to_repo = true
+style = "bold blue"
+repo_root_style = "bold cyan"
+repo_root_format = '[$before_root_path]($before_repo_root_style)[$repo_root]($repo_root_style)[$path]($style)[$read_only]($read_only_style) '
+format = '[$before_root_path]($before_repo_root_style)[$repo_root]($repo_root_style)[$path]($style)[$read_only]($read_only_style) '
+
+# --- git ----------------------------------------------------------
+[git_branch]
+symbol = " "
+style = "bold purple"
+format = '[$symbol$branch]($style) '
+
+[git_status]
+style = "yellow"
+format = '([$all_status$ahead_behind]($style) )'
+
+# --- prompt character ---------------------------------------------
+[character]
+success_symbol = "[❯](bold green)"
+error_symbol = "[❯](bold red)"
+vimcmd_symbol = "[❮](bold cyan)"
+
+# --- command duration (right prompt) ------------------------------
+[cmd_duration]
+min_time = 1_500
+format = "took [$duration](yellow) "

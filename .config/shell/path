@@ -1,0 +1,4 @@
+# ~/.config/shell/path — PATH additions
+
+# Local user bins first so user installs override system ones
+export PATH="$HOME/.local/bin:$HOME/.bin:$HOME/.cargo/bin:$PATH"

@@ -1,0 +1,41 @@
+# ~/.config/shell/keybindings — fzf, atuin, zoxide wiring  [bash + zsh]
+
+# --- atuin: synced shell history (Ctrl-R) ------------------------
+if command -v atuin >/dev/null 2>&1; then
+    if [ -n "$BASH_VERSION" ]; then
+        [ -f /usr/share/bash-preexec/bash-preexec.sh ] \
+            && . /usr/share/bash-preexec/bash-preexec.sh
+        eval "$(atuin init bash)"
+    elif [ -n "$ZSH_VERSION" ]; then
+        eval "$(atuin init zsh)"
+    fi
+fi
+
+# --- fzf: Ctrl-T (file), Alt-C (cd), Ctrl-R (history) -------------
+if command -v fzf >/dev/null 2>&1; then
+    if [ -n "$BASH_VERSION" ]; then
+        # bash >=5.1 ships a key-bindings script; fall back to fzf's own
+        if [ -f /usr/share/fzf/key-bindings.bash ]; then
+            . /usr/share/fzf/key-bindings.bash
+            . /usr/share/fzf/completion.bash
+        else
+            eval "$(fzf --bash)"
+        fi
+    elif [ -n "$ZSH_VERSION" ]; then
+        if [ -f /usr/share/fzf/key-bindings.zsh ]; then
+            . /usr/share/fzf/key-bindings.zsh
+            . /usr/share/fzf/completion.zsh
+        else
+            source <(fzf --zsh)
+        fi
+    fi
+fi
+
+# --- zoxide: smart `z`/`cd` ---------------------------------------
+if command -v zoxide >/dev/null 2>&1; then
+    if [ -n "$BASH_VERSION" ]; then
+        eval "$(zoxide init bash)"
+    elif [ -n "$ZSH_VERSION" ]; then
+        eval "$(zoxide init zsh)"
+    fi
+fi

@@ -1,0 +1,33 @@
+# ~/.config/shell/functions
+
+# mkcd — make a directory and cd into it
+mkcd() { mkdir -p "$1" && cd "$1" || return; }
+
+# extract — unpack any archive by extension
+extract() {
+    [ -z "$1" ] && { echo "Usage: extract <archive>"; return 1; }
+    [ ! -f "$1" ] && { echo "'$1' is not a file"; return 1; }
+    case "$1" in
+        *.tar.bz2|*.tbz2) tar xjf "$1" ;;
+        *.tar.gz|*.tgz)   tar xzf "$1" ;;
+        *.tar.xz)         tar xJf "$1" ;;
+        *.tar.zst)        tar --zstd -xf "$1" ;;
+        *.tar)            tar xf "$1" ;;
+        *.bz2)            bunzip2 "$1" ;;
+        *.gz)             gunzip "$1" ;;
+        *.xz)             unxz "$1" ;;
+        *.zip)            unzip "$q" ;;
+        *.rar)            unrar x "$1" ;;
+        *.7z)             7z x "$1" ;;
+        *) echo "don't know how to extract '$1'" ;;
+    esac
+}
+
+# ps-grep — find a process by name (without matching the grep itself)
+psg() { ps aux | grep -i "${1:-}" | grep -v grep; }
+
+# up — go up N directories:  up 3 == cd ../../..
+up() { local d=; for _ in $(seq "${1:-1}"); do d+=../; done; cd "$d" || return; }
+
+# tre — tree view limited to depth, ignoring junk
+tre() { eza --tree --level="${1:-2}" --git-ignore --icons; }
